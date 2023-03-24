@@ -11,41 +11,19 @@ url = "https://ac.cnstrc.com/browse/group_id/sneakers?c=ciojs-client-2.29.12&key
 response = requests.get(url=url)
 # parse the response content rec'd
 output = json.loads(response.text)
-# print sneaker title
-print('Title: ' + output["response"]['results'][0]['value'])
-# print sKU
-print('SKU: ' + output["response"]['results'][0]['data']['sku'])
-# print colorway
-print('Color: ' +output["response"]['results'][0]['data']['color'])
-# print image url
-print('Image: ' +output["response"]['results'][0]['data']['image_url'])
-# print release date
-release_MMDD = str(output["response"]['results'][0]['data']['release_date'])
-release_YY = str(output["response"]['results'][0]['data']['release_date_year'])
-print('Release Date: ' + release_MMDD[4:6]+ "-" + release_MMDD[6:]+ "-" +release_YY)
-# print retail price
-retail_cents= output["response"]['results'][0]['data']['retail_price_cents']
-retail_dollars = retail_cents/100
-print('Retail $: ' +str(retail_dollars))
 
-
-
-
-
-
-
-
-
-
-
-# find all items on the page
-# create a empty list to store the items
-# item_list = []
-#loop through each item to find the information
-
-#print results
-# print(item_list)
-
-
-# response > results > [i]> data > color, image url, id, value, release_date , retail_price_cents
-
+#loop through each result found in results for:
+for result in output["response"]["results"]:
+    print('------------------------------')
+    print('Title: ' +result['value'])
+    print('SKU: ' + result['data']['sku'])
+    print('Color: ' + result['data']['color'])
+    print('Image: ' +result['data']['image_url'])
+    release_MMDD = str(result['data']['release_date'])
+    release_YY = str(result['data']['release_date_year'])
+    # 4:6 = capture 4-6 characters 6: =  
+    print('Release Date: ' + release_MMDD[4:6] + "-" + release_MMDD[6:]+ "-" + release_YY)
+    retail_cents= result['data']['retail_price_cents']
+    retail_dollars= retail_cents/100
+    print('Retail $:' + str(retail_dollars))
+    print('------------------------------') 
